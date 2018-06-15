@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="main">
+        <section>
+<actions>
+				<set field="titleProperty" value="My Home Page" />
+				<!-- setting a simple field,whose value can be got in the FTL pages as 
+					${uiLabelMap.get(pageName)} -->
+				<set field="pageName" value="main" /><!-- this highlights the selected 
+					menu-item with name "main" -->
+			</actions>   
+            <widgets>
+                <decorator-screen name="oneColumnLayout" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="mainBodyContent">
+                    <label text="this is the main body" style="label label-primary" />
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+     <screen name="twoColExample">
+        <section>
+		<actions>
+				<set field="titleProperty" value="My Two Column Page" />
+				<!-- setting a simple field,whose value can be got in the FTL pages as 
+					${uiLabelMap.get(pageName)} -->
+				<set field="pageName" value="Two Column Example Page" /><!-- this highlights the selected 
+					menu-item with name "main" -->
+			</actions>   
+            <widgets>
+                <decorator-screen name="twoColumnLayout" location="component://dynamusic/widget/CommonScreens.xml">
+                
+              	  <decorator-section name='asideContent'>
+              	  <container id="side1" style="row">
+                <label text="this is a aside text"  style='label label-default' />
+                </container>
+                <container id="side2" style="row">
+                <platform-specific><html><html-template location="component://dynamusic/webapp/dynamusic/includes/sidebar.ftl"/></html></platform-specific>
+                </container>
+                </decorator-section>                
+                    <decorator-section name="mainBodyContent">
+                    <label text="this is the main body" style="label label-primary" />
+                   
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="twoColTemplateScreen">
+        <section>
+		<actions>
+				<set field="titleProperty" value="My Two Column Page" />
+				<!-- setting a simple field,whose value can be got in the FTL pages as 
+					${uiLabelMap.get(pageName)} -->
+				<set field="pageName" value="Two Column Example Page" /><!-- this highlights the selected 
+					menu-item with name "main" -->
+			</actions>   
+            <widgets>
+                <decorator-screen name="twoColumnLayout" location="component://dynamusic/widget/CommonScreens.xml">                
+              	  <decorator-section name='otherAsideContents'>              	     
+                 <content content-id="asideContainer"/>       
+                </decorator-section>                
+                    <decorator-section name="mainBodyContent">
+                    <label text="this is the main body" style="label label-primary" />
+                    <content content-id="mainBodyContainer"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <!-- dynamusic specific screens start here -->
+    
+       <screen name="dynamusicHome">
+        <section>
+<actions>
+    	<property-map resource="DynamusicUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="titleProperty" from-field="uiLabelMap.dynamusicHomeKey"  global='true' />				 
+				<set field="pageName" from-field="uiLabelMap.dynamusicHomeKey"   global='true'/>	
+			</actions>   
+            <widgets>
+                <decorator-screen name="twoColumnLayout" location="${parameters.mainDecoratorLocation}">
+            
+                    <decorator-section name="mainBodyContent">
+                    <label text="this is the main body" style="label label-primary" />
+                                    
+                    <screenlet > <content content-id="Simple_Page"/></screenlet>
+                                         
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+     <screen name="addArtist">
+        <section>
+	<actions>
+    	<property-map resource="DynamusicUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="titleProperty"  value="Add-Edit Artist"/>
+				<set field="pageName" value='Add-Edit Artist'/>	
+				 <set field="id" from-field="parameters.artistId"/>
+			</actions>   
+            <widgets>
+                <decorator-screen name="twoColumnLayout" location="${parameters.mainDecoratorLocation}"> 
+                    <decorator-section name="mainBodyContent">
+                     <include-form location="component://dynamusic/widget/DynamusicForms.xml" name="addArtist"/>
+                    
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="artists">
+        <section>
+	<actions>
+    	<property-map resource="DynamusicUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="titleProperty"  value="List alll Artists"/>
+				<set field="pageName" value='List all Artists'/>	
+				<entity-condition list="artists" entity-name="Artist"  >
+				<order-by field-name="artistName"/>
+				</entity-condition> 
+			</actions>   
+            <widgets>
+                <decorator-screen name="twoColumnLayout" location="${parameters.mainDecoratorLocation}"> 
+                    <decorator-section name="mainBodyContent">
+                      <platform-specific><html><html-template location="component://dynamusic/webapp/dynamusic/gadgets/listArtists.ftl"/></html></platform-specific>
+                     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+     <screen name="manageArtist">
+        <section>
+	<actions>
+ 
+	
+    	<property-map resource="DynamusicUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="titleProperty"  value="Add/Edit Artist"/>
+				<set field="pageName" value='Add/Edit Artist'/>	
+				
+			</actions>   
+            <widgets> 
+                <decorator-screen name="twoColumnLayout" location="${parameters.mainDecoratorLocation}"> 
+                    <decorator-section name="mainBodyContent">
+                     <include-form location="component://dynamusic/widget/DynamusicForms.xml" name="manageArtist"/>
+                     <container>
+                      <include-form location="component://dynamusic/widget/DynamusicForms.xml" name="manageArtistGrid"/>
+                      </container>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="artistDetails">
+        <section>
+	<actions>
+  <entity-one entity-name="Artist" value-field="artist"/>  
+	
+    	<property-map resource="DynamusicUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="titleProperty"  value="Artist Details"/>
+				<set field="pageName" value='Artist Details - ${artist.artistName}'/>	
+				
+			</actions>   
+            <widgets> 
+                <decorator-screen name="twoColumnLayout" location="${parameters.mainDecoratorLocation}"> 
+                    <decorator-section name="mainBodyContent">
+                    <platform-specific>
+                    <html>
+                      <html-template location="component://dynamusic/webapp/dynamusic/gadgets/displayOneArtist.ftl"/> 
+                    </html>
+                    </platform-specific>
+                     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="manageAlbum">
+        <section>
+	<actions>	
+    	<property-map resource="DynamusicUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="titleProperty"  value="Add/Edit Album"/>
+				<set field="pageName" value='Add/Edit Album'/>	
+				
+			</actions>   
+            <widgets> 
+                <decorator-screen name="dynamusicAdminDecorator" location="${parameters.mainDecoratorLocation}"> 
+                    <decorator-section name="body">
+                     <include-form location="component://dynamusic/widget/DynamusicForms.xml" name="manageAlbum"/>
+                     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="findArtist">
+    <section>
+        <actions>
+            <set field="headerItem" value="findArtist"/>
+            <set field="titleProperty" value="Find Artist"/>
+            <set field="dynamusicCtx" from-field="parameters"/>
+        </actions>
+        <widgets>
+            <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="body">
+                    <section>
+                      
+                        <widgets>
+                            <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                <decorator-section name="search-options">
+                                    <include-form name="findArtist" location="component://dynamusic/widget/DynamusicForms.xml"/>
+                                </decorator-section>
+                                <decorator-section name="search-results">
+                                    <include-form name="listArtists" location="component://dynamusic/widget/DynamusicForms.xml"/>
+                                </decorator-section>
+                            </decorator-screen>
+                        </widgets>
+                        <fail-widgets>
+                            <label style="h3">No permission</label>
+                       </fail-widgets>
+                    </section>
+                </decorator-section>
+            </decorator-screen>
+        </widgets>
+    </section>
+</screen>
+    
+    
+    
+    
+    
+    <!-- dynamusic specific screens ends here -->
+    
+    
+    
+
+</screens>

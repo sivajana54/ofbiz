@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="VASTCOMMERCE_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="VASTCOMMERCE_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="VASTCOMMERCE_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="VASTCOMMERCE_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="VASTCOMMERCE_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="VASTCOMMERCE_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="VASTCOMMERCE_ADMIN"/>
+</entity-engine-xml>

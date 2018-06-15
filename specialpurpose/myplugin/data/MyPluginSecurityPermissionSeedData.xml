@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the MyPlugin Component." permissionId="MYSECURITY_VIEW"/>
+    <SecurityPermission description="Create operations in the MyPlugin Component." permissionId="MYSECURITY_CREATE"/>
+    <SecurityPermission description="Update operations in the MyPlugin Component." permissionId="MYSECURITY_UPDATE"/>
+    <SecurityPermission description="Delete operations in the MyPlugin Component." permissionId="MYSECURITY_DELETE"/>
+    <SecurityPermission description="ALL operations in the MyPlugin Component." permissionId="MYSECURITY_ADMIN"/>
+
+    <SecurityGroupPermission groupId="SUPER" permissionId="MYSECURITY_ADMIN"/>
+
+</entity-engine-xml>

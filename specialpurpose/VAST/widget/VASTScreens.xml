@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="main">
+        <section>
+            <actions>
+                <set field="headerItem" value="main"/><!-- this highlights the selected menu-item with name "main" -->
+            </actions>
+            <widgets>
+                <decorator-screen name="VASTCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="PDP">
+        <section>
+            <actions>
+                <set field="headerItem" value="main"/><!-- this highlights the selected menu-item with name "main" -->
+            </actions>
+            <widgets>
+                <decorator-screen name="VASTCommonDecorator1" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                   <platform-specific>
+                    <html>
+                   <html-template location="component://VAST/webapp/VAST/templates/pdp.ftl"/> 
+                    
+                    <!-- <html-template location="component://VAST/webapp/VAST/templates/ProductSummary.ftl" /> -->
+                    </html>
+                    
+                    </platform-specific> 
+                   
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+
+
+    <!-- <screen name="productdetail">
+        <section>
+            <actions>
+                <set field="productsummaryScreen" value="component://ecommerce/widget/CatalogScreens.xml#productsummary"/>
+
+                <script location="component://order/groovyScripts/entry/catalog/ProductDetail.groovy"/>
+            </actions>
+            <widgets>
+                <include-screen name="breadcrumbs"/>
+                <platform-specific><html><html-template location="component://ecommerce/template/catalog/ProductDetail.ftl"/></html></platform-specific>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="inlineProductDetail">
+        <section>
+            <actions>
+                <script location="component://order/groovyScripts/entry/catalog/InlineProductDetail.groovy"/>
+            </actions>
+            <widgets>
+                <platform-specific><html><html-template location="component://order/template/entry/catalog/InlineProductDetail.ftl"/></html></platform-specific>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="configproductdetail">
+        <section>
+            <actions>
+                <set field="productsummaryScreen" value="component://ecommerce/widget/CatalogScreens.xml#productsummary"/>
+                <set field="inlineProductDetailScreen" value="component://ecommerce/widget/CatalogScreens.xml#inlineProductDetail"/>
+                <script location="component://order/groovyScripts/entry/catalog/ProductDetail.groovy"/>
+                <script location="component://order/groovyScripts/entry/catalog/PrepareConfigForm.groovy"/>
+            </actions>
+            <widgets>
+                <include-screen name="breadcrumbs"/>
+                <platform-specific><html><html-template location="component://ecommerce/template/catalog/ConfigProductDetail.ftl"/></html></platform-specific>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="productreview">
+        <section>
+            <actions>
+                <set field="leftbarScreenName" value="leftbar"/>
+                <set field="rightbarScreenName" value="rightbar"/>
+                <set field="MainColumnStyle" value="center"/>
+
+                <set field="titleProperty" value="PageTitleProductReview"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific><html><html-template location="component://ecommerce/template/catalog/ProductReview.ftl"/></html></platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="lastviewedproducts">
+        <section>
+            <actions>
+                <set field="leftbarScreenName" value="leftbar"/>
+                <set field="rightbarScreenName" value="rightbar"/>
+                <set field="MainColumnStyle" value="center"/>
+
+                <set field="titleProperty" value="PageTitleLastViewProducts"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific><html><html-template location="component://ecommerce/template/catalog/LastViewedProducts.ftl"/></html></platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="detailImage">
+        <section>
+            <widgets>
+               <platform-specific><html><html-template location="component://ecommerce/template/catalog/DetailImage.ftl"/></html></platform-specific>
+            </widgets>
+        </section>
+    </screen>
+
+ -->
+
+</screens>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>SimpleEmpExample Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+<!-- 
+The entity-auto engine is one of the important engines that is used in more than 1500 services OOTB to create entities. There are many options in this to exclude certain fields, make PK as either auto-generated or
+got as an input from the front-end, make some fields as optional or compulsory etc., 
+ -->
+
+    <service name="createDeptService"  default-entity-name='SimpleDept'  engine="entity-auto" invoke='create' auth='false'>
+    
+        <description>
+            Create a new Dept Entity Record
+        </description>
+        <auto-attributes include="pk"  mode="IN" optional="false"/>  
+        <auto-attributes include="nonpk"  mode="IN" optional="false">
+    <exclude field-name='location'/>  
+        </auto-attributes>
+       
+    </service> 
+    
+    <service name="createEmpService"  default-entity-name='SimpleEmp'  engine="entity-auto" invoke='create' auth='false'>
+    
+        <description>
+            Create a new Emp Entity Record
+        </description>
+        <auto-attributes include="pk"  mode="IN" optional="false"/>  
+        <auto-attributes include="nonpk"  mode="IN" optional="false">
+    
+        </auto-attributes>
+       
+    </service> 
+    
+    <service name="myFirstService" engine="java" location="com.vast.sample.services.MyFirstService" invoke="myFirstMethod">
+<description>My First Service</description>
+ <attribute name="username" type="String" mode="IN" optional="true"/>
+  <attribute name="age" type="Integer" mode="IN" optional="true"/>
+ 
+</service>
+    
+</services>

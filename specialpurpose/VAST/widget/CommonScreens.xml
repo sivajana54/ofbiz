@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="main-decorator">
+        <section>
+            <actions>
+                <property-map resource="VASTUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+
+                <set field="layoutSettings.companyName" from-field="uiLabelMap.VASTCompanyName" global="true"/>
+                <set field="layoutSettings.companySubtitle" from-field="uiLabelMap.VASTCompanySubtitle" global="true"/>
+
+                <set field="activeApp" value="VAST" global="true"/>
+                <set field="applicationMenuName" value="MainAppBar" global="true"/>
+                <set field="applicationMenuLocation" value="component://VAST/widget/VASTMenus.xml" global="true"/>
+                <set field="applicationTitle" value="${uiLabelMap.VASTApplication}" global="true"/>
+            </actions>
+            <widgets>
+                <include-screen name="GlobalDecorator" location="component://common/widget/CommonScreens.xml"/>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="VASTCommonDecorator">
+        <section>
+            <actions>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="VAST" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.VASTViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+    <screen name="VASTCommonDecorator1">
+        <section>
+            <actions>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/js/vendor/bootstrap/bootstrap.min.css" global="true"/>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/css/animate.css" global="true"/>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/js/vendor/slick/slick.css" global="true"/>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/js/vendor/swiper/swiper.min.css" global="true"/>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/js/vendor/magnificpopup/dist/magnific-popup.css" global="true"/>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/js/vendor/nouislider/nouislider.css" global="true"/>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/js/vendor/darktooltip/dist/darktooltip.css" global="true"/>
+            
+            <set field="layoutSettings.styleSheets[]" value="/VAST/css/style.css" global="true"/>
+            <set field="layoutSettings.styleSheets[]" value="/VAST/css/megamenu.css" global="true"/>
+            
+             <set field="layoutSettings.styleSheets[]" value="/VAST/fonts/icomoon-reg/style.css" global="true"/>
+             
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/bootstrap/bootstrap.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/swiper/swiper.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/slick/slick.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/parallax/parallax.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/isotope/isotope.pkgd.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/magnificpopup/dist/jquery.magnific-popup.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/countdown/jquery.countdown.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/nouislider/nouislider.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/ez-plus/jquery.ez-plus.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/tocca/tocca.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/scrollLock/jquery-scrollLock.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/bootstrap-tabcollapse/bootstrap-tabcollapse.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/darktooltip/dist/jquery.darktooltip.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/imagesloaded/imagesloaded.pkgd.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/instafeed/instafeed.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/megamenu.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/form/jquery.validate.min.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/form/jquery.form.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/app.js" global="true"/>
+             <set field="layoutSettings.javaScripts[+0]" value="/VAST/js/vendor/jquery/jquery.js" global="true"/>
+                    
+            </actions>
+            <widgets>
+               <section>
+               <widgets>
+               
+               <include-screen name="defaultHeader"/>	             			
+                    						
+                   <decorator-section-include name="body"/>
+                   							 
+               <include-screen name="defaultFooter"/>
+               
+               </widgets>
+               <fail-widgets>
+                                <label style="h3">${uiLabelMap.SimpleEmpExampleViewPermissionError}</label>
+                            </fail-widgets>
+               </section>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="defaultHeader">
+    <section><widgets>
+    <platform-specific ><html><html-template location="component://VAST/webapp/VAST/templates/pdp-preBody.ftl"/></html></platform-specific>
+    </widgets></section>
+    </screen>
+    
+     <screen name="defaultFooter">
+    <section><widgets>
+    <platform-specific ><html><html-template location="component://VAST/webapp/VAST/templates/pdp-postBody.ftl"/></html></platform-specific>
+    </widgets></section>
+    </screen>
+</screens>

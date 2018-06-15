@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
+    <property key="MyTestPluginApplication">
+        <value xml:lang="en">MyTestPlugin Application</value>
+    </property>
+    <property key="MyTestPluginCompanyName">
+        <value xml:lang="en">OFBiz: MyTestPlugin</value>
+        <value xml:lang="zh-TW">OFBiz: MyTestPlugin</value>
+    </property>
+    <property key="MyTestPluginCompanySubtitle">
+        <value xml:lang="en">Part of the Apache OFBiz Family of Open Source Software</value>
+        <value xml:lang="it">Un modulo della famiglia di software open source Apache OFBiz</value>
+    </property>
+    <property key="MyTestPluginViewPermissionError">
+        <value xml:lang="en">You are not allowed to view this page.</value>
+    </property>
+</resource>

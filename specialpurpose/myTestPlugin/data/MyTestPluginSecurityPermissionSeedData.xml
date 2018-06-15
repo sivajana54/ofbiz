@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the MyTestPlugin Component." permissionId="MYTESTPLUGIN_VIEW"/>
+    <SecurityPermission description="Create operations in the MyTestPlugin Component." permissionId="MYTESTPLUGIN_CREATE"/>
+    <SecurityPermission description="Update operations in the MyTestPlugin Component." permissionId="MYTESTPLUGIN_UPDATE"/>
+    <SecurityPermission description="Delete operations in the MyTestPlugin Component." permissionId="MYTESTPLUGIN_DELETE"/>
+    <SecurityPermission description="ALL operations in the MyTestPlugin Component." permissionId="MYTESTPLUGIN_ADMIN"/>
+
+    <SecurityGroupPermission groupId="SUPER" permissionId="MYTESTPLUGIN_ADMIN"/>
+
+</entity-engine-xml>

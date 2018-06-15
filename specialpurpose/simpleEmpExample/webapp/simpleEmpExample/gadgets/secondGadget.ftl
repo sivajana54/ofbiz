@@ -1,0 +1,1 @@
+<h2>Welcome to the wonderful world of FTL</h2>

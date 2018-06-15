@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://ofbiz.apache.org/Widget-Screen"
+	xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<screen name="main">
+		<section>
+			<actions>
+				<set field="titleProperty" value="My Home Page" />
+				<!-- setting a simple field,whose value can be got in the FTL pages as 
+					${uiLabelMap.get(pageName)} -->
+				<set field="pageName" value="main" /><!-- this highlights the selected 
+					menu-item with name "main" -->
+			</actions>
+			<widgets>
+				<decorator-screen name="SimpleEmpExampleCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+
+					<decorator-section name="body"> <!-- Here the body is given a simple label in the XML screen definition itself -->
+
+						<label text="Hello World!! :)" />
+
+						<screenlet title='Add Department'>
+							<include-form name="createDeptForm"
+								location="component://simpleEmpExample/widget/SimpleEmpExampleForms.xml" />
+						</screenlet>
+
+			<screenlet title='Add Employee'   id="myScreenlet"  name="myScreenletName">
+							<include-form name="createEmpForm"
+								location="component://simpleEmpExample/widget/SimpleEmpExampleForms.xml" />
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="second">
+		<section>
+			<actions>
+				<set field="titleProperty" value="My Second Page" />
+				<set field="pageName" value="My Second Page Header" />
+				
+				<entity-condition entity-name="SimpleDept" filter-by-date="true" list="departments">
+					<order-by field-name="deptName"/>
+			</entity-condition>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="SimpleEmpExampleCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<label style="h3" text="${uiLabelMap[pageName]}"></label>
+					</decorator-section>
+					<decorator-section name="body"> <!-- here the body is actually made up of a FTL which is included here -->
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://simpleEmpExample/webapp/simpleEmpExample/gadgets/secondGadget.ftl" />
+							</html>
+						</platform-specific>
+						
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://simpleEmpExample/webapp/simpleEmpExample/gadgets/empForm.ftl" />
+							</html>
+						</platform-specific>
+						
+						
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name='third'>
+		<section>
+			<condition>
+				<if-compare operator="equals" field='parameters.show'
+					value="third" />
+
+			</condition>
+			<actions>
+				<set field="field1" from-field="parameters.show" />
+			</actions>
+
+			<widgets>
+			<decorator-screen name="SimpleEmpExampleCommonDecorator1"
+					location="${parameters.mainDecoratorLocation}">
+			<decorator-section name="body">
+			<!-- A Screenlet is just a DIV and inside that it can contain any other widget,decorator-screen  or containers etc.,A column container will create a HTML table and the column would be the td tags. 
+			tables are outdated, anyhow. to create a header cell use the styles. the style attribute will be pointing to a CSS class
+			 -->
+			<screenlet id="slt1">
+			<column-container id="cc1" >
+			<column id="col1" > <label id='insideCol' text='INSIDE'> </label></column>
+			<column id="col2"> <label id='insideCol2' text='INSIDE COL2'> </label></column>
+			</column-container>
+			</screenlet>
+				<container id="container1">
+					<label id="label1"
+						text='This is the passed parameter - ${field1} for the locale ${locale}' />
+  
+					<label id='label2' text='the parameters map contains - ${parameters}' />
+
+				</container>
+				</decorator-section>
+				</decorator-screen>
+			</widgets>
+			<fail-widgets>
+				<container id='fail1'>
+					<label id='label2' text='this is a failed label - ${field1}' />
+				</container>
+			</fail-widgets>
+
+		</section>
+	</screen>
+
+
+
+<screen name='listEmployees'>
+		<section>
+			 
+			<actions>
+				 <entity-condition list="employees" entity-name="SimpleEmp">
+				 <order-by field-name="empName"/>
+				 </entity-condition>
+			</actions>
+
+			<widgets>
+			<decorator-screen name="SimpleEmpExampleCommonDecorator1"
+					location="${parameters.mainDecoratorLocation}">
+			<decorator-section name="body">
+		 
+		 
+				<container id="container1">
+					 <platform-specific>
+							<html>
+								<html-template
+									location="component://simpleEmpExample/webapp/simpleEmpExample/gadgets/listEmployees.ftl" />
+							</html>
+						</platform-specific>
+				</container>
+				</decorator-section>
+				</decorator-screen>
+			</widgets>
+			<fail-widgets>
+				<container id='fail1'>
+					<label id='label2' text='this is a failed label - ${field1}' />
+				</container>
+			</fail-widgets>
+
+		</section>
+
+
+	</screen>
+
+
+<screen name='oneEmployee'>
+		<section>
+			 
+			<actions>
+				
+<entity-one entity-name="SimpleEmp"   value-field="employee">
+<field-map field-name="empNo" from-field="parameters.empno"/>
+</entity-one>
+ 
+ 
+			</actions>
+
+			<widgets>
+			<decorator-screen name="SimpleEmpExampleCommonDecorator1"
+					location="${parameters.mainDecoratorLocation}">
+			<decorator-section name="body">
+		 
+		 
+				<container id="container1"><label text="Details of ${employee.empNo}" style='h2'></label>
+					 <platform-specific>
+							<html>
+								<html-template
+									location="component://simpleEmpExample/webapp/simpleEmpExample/gadgets/oneEmployee.ftl" />
+							</html>
+						</platform-specific>
+				</container>
+				</decorator-section>
+				</decorator-screen>
+			</widgets>
+			<fail-widgets>
+				<container id='fail1'>
+					<label id='label2' text='this is a failed label - ${field1}' />
+				</container>
+			</fail-widgets>
+
+		</section>
+
+
+	</screen>
+
+<screen name='printServiceOutput'>
+		<section>			 
+		
+			<widgets>
+			<decorator-screen name="SimpleEmpExampleCommonDecorator1"
+					location="${parameters.mainDecoratorLocation}">
+			<decorator-section name="body">
+		 
+		 
+				<container id="container1"><label text="output Parameters from My First Service" style='h2'></label>
+					 <platform-specific>
+							<html>
+								<html-template
+									location="component://simpleEmpExample/webapp/simpleEmpExample/gadgets/printServiceOutput.ftl" />
+							</html>
+						</platform-specific>
+				</container>
+				</decorator-section>
+				</decorator-screen>
+			</widgets>
+			<fail-widgets>
+				<container id='fail1'>
+					<label id='label2' text='this is a failed label - ${field1}' />
+				</container>
+			</fail-widgets>
+
+		</section>
+
+
+	</screen>
+
+
+
+
+
+
+
+
+
+
+
+
+	<screen name='callFirstGroovy'>
+		<section>
+			<condition>
+				<if-compare operator="equals" field='parameters.show'
+					value="groovy" />
+			</condition>
+			<actions>
+				<script
+					location="component://simpleEmpExample/webapp/simpleEmpExample/WEB-INF/actions/firstScript.groovy" />
+			</actions>
+
+			<widgets>
+				<container id="container1">
+					<label id="label1"
+						text='This is the output parameter - ${outputValue}   and its length is ${inputLength}' />
+						<platform-specific><html><html-template location="component://simpleEmpExample/webapp/simpleEmpExample/gadgets/printValues.ftl"/></html></platform-specific>
+
+				</container>
+			</widgets>
+			<fail-widgets>
+				<container id='fail1'>
+					<label id='label2' text='this is a failed label - ${outputValue}' />
+				</container>
+			</fail-widgets>
+
+		</section>
+
+	</screen>
+
+	<screen name="nestedSections">
+		<section>
+			<condition>
+				<if-compare field="parameters.outer" operator="equals"  value="true" />
+			</condition>
+			<actions>
+				<set field="blah" value="blih" />
+			</actions>
+			<widgets>
+				<container>
+					<label text="In Then part. Blah is: ${blah}" />
+				</container>
+				<container>
+					<label text="inner is: ${parameters.inner}" />
+				</container>
+				<section>
+					<condition>
+						<if-compare field="parameters.inner" operator="equals" 				value="true" />
+					</condition>
+					<actions>
+						<set field="inner.blah" value="thenBlih" />
+					</actions>
+					<widgets>
+						<label text="In Then-Then part. inner.blah is: ${inner.blah}" />
+					</widgets>
+					<fail-widgets>
+						<label text="In Then-Else part. inner.blah is: ${inner.blah}" />
+					</fail-widgets>
+				</section>
+			</widgets>
+			<fail-widgets>
+				<container>
+					<label text="In Else part. Blah is: ${blah}" />
+				</container>
+				<container>
+					<label text="inner is: ${parameters.inner}" />
+				</container>
+				<section>
+					<condition>
+						<if-compare field="parameters.inner" operator="equals" 							value="true" />
+					</condition>
+					<actions>
+						<set field="inner.blah" value="elseBlih" />
+					</actions>
+					<widgets>
+						<label text="In Else-Then part. inner.blah is: ${inner.blah}" />
+					</widgets>
+					<fail-widgets>
+						<label text="In Else-Else part. inner.blah is: ${inner.blah}" />
+					</fail-widgets>
+				</section>
+			</fail-widgets>
+		</section>
+	</screen>
+
+
+	<screen name='displayFirstForm'>
+		<section>
+			<actions>
+				<set field="titleProperty" value="Display First Form" />
+			 
+				<set field="pageName" value="Display Form" /> 
+			</actions>
+			<widgets>
+			<decorator-screen name="SimpleEmpExampleCommonDecorator1" 		location="${parameters.mainDecoratorLocation}">
+			<decorator-section name="body">			 
+			 
+				<container id="container1">
+					 <include-form location="component://simpleEmpExample/widget/SimpleEmpExampleForms.xml" name="MyFirstForm"/>
+
+				</container>
+				</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+<screen name='printFirstFormValuesScreen'>
+		<section>			
+		<actions>
+			<set field="titleProperty" value="Print Form Values" />
+			 
+				<set field="pageName" value="PrintForm Values" /> 
+		
+		</actions>
+			<widgets>
+			<decorator-screen name="SimpleEmpExampleCommonDecorator1" 		location="${parameters.mainDecoratorLocation}">
+			<decorator-section name="body">			 
+			 
+				<container id="container1">
+				 <platform-specific><html><html-template  location="component://simpleEmpExample/webapp/simpleEmpExample/gadgets/printFormValues.ftl"/></html></platform-specific>
+
+				</container>
+				</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+</screens>

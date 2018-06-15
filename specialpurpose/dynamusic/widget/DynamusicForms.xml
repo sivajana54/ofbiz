@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+<form name="addArtist" target="createArtist"  default-table-style="form-group" default-title-style="label-default h5"  default-widget-area-style="form-control">
+
+<auto-fields-service service-name="createArtist"/>
+<!-- <field name='id' required-field="true" title-area-style="label-default"> <text/> </field> -->
+<field name='genre'  title="Genre" title-style="label-success"> 
+ <drop-down allow-empty="false" current-description="">
+               
+                <entity-options description="${description}" key-field-name="enumId" entity-name="Enumeration" >
+                <entity-constraint name="enumTypeId" value="${parameters.type}"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+
+</field>
+<!-- 
+<field name='artistName'  tooltip="Artist Name" tooltip-style="label-success"><text/></field>
+<field name='description'><text/></field>
+<field name='photoURL'><text/></field> -->
+<field name='addArtist'  title="Add An Artist" title-style="label-success">
+<submit button-type="button"/>
+</field>
+</form>
+
+
+<form name="manageArtistGrid"   extends="manageArtist"  extends-resource="component://dynamusic/widget/DynamusicForms.xml">
+<field name='artistName'  tooltip="Artist Name" tooltip-style="label-success"  title="artistname"><text/></field>
+
+</form>
+
+
+<form name="manageArtist" target="updateArtist"  default-table-style="form-group" default-title-style="label-default h5"  default-widget-area-style="form-control"  default-map-name="artist"  >
+<!-- here the url as well as the submit buttons are being rendered conditionally using the expression language for the attribute use-when. instead of that, a groovy script can also be used
+to do the same. The groovy script CheckAction.groovy is actually setting a variable by name 'neededAction' in the context. that can be used as a condition also here.
+Also, as you can see, the use-when is given in two different syntax. one is the 
+ -->
+  <actions>
+  <entity-one entity-name="Artist" value-field="artist"/>  
+  <script location='component://dynamusic/webapp/dynamusic/WEB-INF/actions/GenreEntityDetails.groovy'/>
+  <script location='component://dynamusic/webapp/dynamusic/WEB-INF/actions/CheckAction.groovy'/>
+ <set field="nAction" value="${neededAction}"/>
+ </actions>
+<alt-target target="createArtist" use-when="${groovy:artist==null}"/>
+<alt-target target='removeArtist' use-when="${groovy:artist!=null &amp;&amp; parameters.action.equals('remove')}"/>
+
+<auto-fields-service service-name="createArtist"/>
+<field name='nAction'><text  default-value="${nAction}"/> </field>
+ <field name="id"><hidden/></field>
+ <field name='artistName' required-field="true" title='artistName'><text/></field>
+<field name='genre'  title="Genre" title-style="label-success"  required-field="true"> 
+ <drop-down allow-empty="false" current-description="description"   current="selected">
+               
+                <entity-options description="${enumCode}" key-field-name="enumId" entity-name="Enumeration" >
+                <entity-constraint name="enumTypeId" value="${parameters.type}"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+
+</field>
+<!-- 
+<field name='artistName'  tooltip="Artist Name" tooltip-style="label-success"><text/></field>
+<field name='description'><text/></field>
+<field name='photoURL'><text/></field> -->
+<field name='addArtist'  title="Add An Artist" title-style="label-success"   use-when="artist==null">
+
+<submit button-type="button"/>
+</field>
+<field name='updateArtist'  title="Update Artist" title-style="label-success"  use-when="artist!=null &amp;&amp; parameters.action.equals('update')"><submit button-type='button'/></field>
+<field name='removeArtist'  title="Remove Artist" title-style="label-success"  use-when="artist!=null &amp;&amp; parameters.action.equals('remove')"><submit button-type='button'/></field>
+
+</form>
+
+
+<form name="manageAlbum" target="updateAlbum"  default-table-style="form-group" default-title-style="label-default h5"   default-map-name="album"  >
+ 
+  <actions>
+  <entity-one entity-name="Album" value-field="album"/>  
+ 
+ </actions>
+<alt-target target="createAlbum" use-when="${groovy:album==null}"/>
+<alt-target target='removeAlbum' use-when="${groovy:album!=null &amp;&amp; parameters.action.equals('remove')}"/>
+
+<auto-fields-service service-name="createAlbum"/>
+  <field name="id"><hidden/></field>
+ <field name='title' required-field="true" title='title'><text/></field>
+ <field name='artist' required-field="true" title='artist'><lookup target-form-name="findArtist" size="20"/></field>
+<field name='addAlbum'  title="Add An Album" title-style="label-success"   use-when="album==null">
+
+<submit button-type="button"/>
+</field>
+<field name='updateAlbum'  title="Update Album" title-style="label-success"  use-when="album!=null &amp;&amp; parameters.action.equals('update')"><submit button-type='button'/></field>
+<field name='removeAlbum'  title="Remove Album" title-style="label-success"  use-when="album!=null &amp;&amp; parameters.action.equals('remove')"><submit button-type='button'/></field>
+
+</form>
+
+
+<form name="findArtist" type="single" target="findArtist" default-entity-name="Artist">
+<field name="noConditionFind"><hidden value="Y"/> <!-- if this isn't there then with all fields empty no query will be done --></field>
+<field name="id" title="id"><text-find/></field>
+<field name="artistName" title="Artist Name"><text-find/></field>
+<!--  
+<field name="genre" title="Genre">
+<drop-down allow-empty="false" current-description="description"   current="selected">
+               
+                <entity-options description="${enumCode}" key-field-name="enumId" entity-name="Enumeration" >
+                <entity-constraint name="enumTypeId" value="GENRE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+            </field>-->
+            <field name="searchButton" title="Find" widget-style="smallSubmit"><submit button-type="button" image-location="/images/icons/magnifier.png"/></field>
+</form>
+
+<form name="listArtists"   type="list" list-name="listIt" paginate-target="findArtist"  default-entity-name="Artist"   separate-columns="true"
+odd-row-style="alternate-row"  header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+<actions>
+<service service-name="performFind" result-map="result" result-map-list="listIt">
+<field-map field-name="inputFields" from-field="parameters"/>
+<field-map field-name="entityName" value="Artist"/>
+<field-map field-name="orderBy" from-field="parameters.sortField"/>
+<field-map field-name="viewIndex" from-field="viewIndex"/>
+<field-map field-name="viewSize" from-field="viewSize"/>
+</service>
+</actions>
+<field name="id" title="id"><display/></field>
+<field name="id" title="id"  widget-style="buttontext">
+            <hyperlink also-hidden="false" target-type="plain" description="${id}" target="javascript:set_value('${id}')"/>
+        </field>
+<field name="genre" title="Genre"><display/></field>
+<field name="artistName" title="artistName" sort-field="true"><display/></field>
+</form>
+
+
+
+
+
+
+</forms>

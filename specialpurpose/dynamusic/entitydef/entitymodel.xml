@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    
+     <title>Song Entity Model</title>
+    <description>Entity Model for Modeling Song-Artist-Albums</description>
+    <copyright>Vamsoft</copyright>
+    <version>1.0</version>
+
+ <entity entity-name="song" package-name="com.vam.dynamusic" title="Song Entity" table-name="VAST_SONG"  no-auto-stamp="false"  >
+ <!-- if the table name is not explicitly given, then it is derived from the entity name. every camel case of the Entity name is separated by an '_' -->
+ 
+ <!-- Refer to the fieldtype<database>.xml file where the ofbiz specific data types are mapped to the database specific datatypes. -->
+ 
+        <field name="id" type="id"><description>primary sequenced ID</description></field>
+        <field name="title" type="name"   />
+        <field name='genre' type='id'/>
+        <field name="downloadURL" type="url"  col-name="url"/>
+        <field name="description" type="description"/>
+        <field name="artist" type="id"/>
+        <field name='album' type='id'/>
+        <prim-key field="id"/>
+        <!-- one song belongs to one album -->
+    	 
+         <relation rel-entity-name="Album" type="one" fk-name="SONG_ALBUM_FK">
+        <key-map field-name="album"  rel-field-name="id"/>
+        </relation>
+        <!-- if you want enumeration data type, then the Enumeration must be separately defined as a type and must be assigned here. refer to the DynamusicTypeData.xml file for the enumeration definitions.
+        An enumeration type by name GENRE has been defined there. and then there are many enumeration values too defined that 
+        -->
+        
+    <relation type="one" fk-name="SONG_GENRE_ENUM" title="SongGenre" rel-entity-name="Enumeration">
+            <key-map field-name="genre" rel-field-name="enumId"/>             
+        </relation>   
+    </entity>
+        
+        <!-- Defining the artist entity -->
+          
+    <entity entity-name="Artist" package-name="com.vam.dynamusic" title="Artist Entity"  table-name="VAST_ARTIST">
+         <field name="id" type="id"><description>primary sequenced ID</description></field>
+         <field name='genre' type='id'/>
+            <field name="artistName" type="name"  not-null="false"/>
+              <field name="description" type="description"/>
+             <field name="photoURL" type="value" col-name="url"/>    
+         <prim-key field="id"/>
+         
+         <relation type="one" fk-name="ARTIST_GENRE_ENUM" title="ARTISTGenre" rel-entity-name="Enumeration">
+            <key-map field-name="genre" rel-field-name="enumId"/>             
+        </relation>  
+         
+    </entity>
+
+  <entity entity-name="Album" package-name="com.vam.dynamusic" title="Album Entity"  table-name="VAST_ALBUM">
+         <field name="id" type="id"><description>primary sequenced ID</description></field>
+            <field name="title" type="name"   />
+            <field name="coverURL" type="value"  col-name='url' />
+            <field name="releaseDate" type="date-time"   />
+              <field name="description" type="description"/>
+              <field name='artist' type="id" col-name='artist_id' />
+          <prim-key field="id"/>
+          
+          <!-- Every album belongs to one artist. this is a over-simplification of the relationship.actually the relationship between album&artist must be many-to-many -->
+          
+           <relation rel-entity-name="Artist" type="one" fk-name="ALBUM_ARTIST_FK">
+        <key-map field-name="artist"  rel-field-name="id"/>
+        </relation>          
+    </entity>
+    
+   
+</entitymodel>
